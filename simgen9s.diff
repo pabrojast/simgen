@@ -1,0 +1,154 @@
+152a153,154
+> from simgenExtras import infoArchivo
+> from math import ceil
+157a160,162
+> 	#Obtengo informacion de la serie
+>     infoSerie = infoArchivo('obs/obshis_%d.txt' % obsix[0])
+> 	
+164c169
+<     offset = 2000 - locate
+---
+>     offset = infoSerie.anioFin+1 - locate
+169c174
+<         regsim = regsim0[startix-50:startix+simlen,:]  # Simulate starting 1950
+---
+>         regsim = regsim0[startix-infoSerie.lenSerie:startix+simlen,:]  # Simulate starting 1950
+221c226,233
+<     x = tmmm[49:99+simlen]                   # Multimodel for 1950-20xx
+---
+> 	#tmmm contiene datos de 1901 a 2095
+> 	#tmmm[49:99] es una lista con los anios 1950 a 2000
+> 	#tmmm[0] = 1901
+> 	#tmmm[49] = 1950
+> 	#tmmm[99] = 2000	
+>     #x = tmmm[49:99+simlen]                   # Multimodel for 1950-20xx
+>     inicio = infoSerie.anioInicio-1901
+>     x = tmmm[inicio:inicio+infoSerie.lenSerie+simlen]                   # Multimodel for 1950-20xx
+223,225c235,237
+<     x20c = xmm[:50]                          # 1950-2000
+<     x21c = xmm[50:50+simlen]                 # 2000 onward
+< 
+---
+>     x20c = xmm[:infoSerie.lenSerie]                          # 1950-2000        
+>     x21c = xmm[infoSerie.lenSerie:infoSerie.lenSerie+simlen]                 # 2000 onward    
+>     
+267c279
+<     sim20total = 1.0E+20 * np.ones((50,3))
+---
+>     sim20total = 1.0E+20 * np.ones((infoSerie.lenSerie,3))
+276,278c288,290
+<         pr21total = pr21forced + simpr[50:]  # len(simpr) = 50 + simlen
+<         ma21total = ma21forced + simma[50:]
+<         mi21total = mi21forced + simmi[50:]
+---
+>         pr21total = pr21forced + simpr[infoSerie.lenSerie:]  # len(simpr) = 50 + simlen
+>         ma21total = ma21forced + simma[infoSerie.lenSerie:]
+>         mi21total = mi21forced + simmi[infoSerie.lenSerie:]
+284c296
+<         pr20total  = pr20forced + simpr[:50] # Same as done for catchments
+---
+>         pr20total  = pr20forced + simpr[:infoSerie.lenSerie] # Same as done for catchments
+287c299
+<         ma20total = ma20forced + simma[:50]
+---
+>         ma20total = ma20forced + simma[:infoSerie.lenSerie]
+289c301
+<         mi20total = mi20forced + simmi[:50]
+---
+>         mi20total = mi20forced + simmi[:infoSerie.lenSerie]
+307c319
+<     yrs2sim  = range(2000,2000+simlen)   # Not including 20C; actual yr nos
+---
+>     yrs2sim  = range(infoSerie.anioFin+1,infoSerie.anioFin+1+simlen)   # Not including 20C; actual yr nos
+313,314c325,326
+<     lpyrs20c = range(1952,2000,4)        # 20C leap years
+<     yrs20c   = range(1950,2000)          # 20C all years
+---
+>     lpyrs20c = range(infoSerie.primerBisiesto,infoSerie.anioFin+1,4)        # 20C leap years
+>     yrs20c   = range(infoSerie.anioInicio,infoSerie.anioFin+1)          # 20C all years
+318,319c330,331
+<             normdic[j] = obspr_raw[j-1950]   # Dict for pr
+<             normdicM[j]= obs_raw[j-1950,:]   # Dict for whole clim vector
+---
+>             normdic[j] = obspr_raw[j-infoSerie.anioInicio]   # Dict for pr
+>             normdicM[j]= obs_raw[j-infoSerie.anioInicio,:]   # Dict for whole clim vector
+321,322c333,334
+<             leapdic[j] = obspr_raw[j-1950]   # Similar, but for leap years
+<             leapdicM[j]= obs_raw[j-1950,:]   # Ditto
+---
+>             leapdic[j] = obspr_raw[j-infoSerie.anioInicio]   # Similar, but for leap years
+>             leapdicM[j]= obs_raw[j-infoSerie.anioInicio,:]   # Ditto
+345,347c357,359
+<     basic20c = [365,365,366,365]             # 1950,1951,1952,1953
+<     leap20long = basic20c*13
+<     leap20norm = leap20long[:50]
+---
+>     basic20c = infoSerie.bisiestosInicio             # 1950,1951,1952,1953    
+>     leap20long = basic20c*int(ceil(infoSerie.lenSerie/4.0))
+>     leap20norm = leap20long[:infoSerie.lenSerie]
+351,352c363,364
+<     basic21c = [366,365,365,365]             # 2000,2001,2002,2003
+<     leap21long = basic21c*25                 # Through 2100
+---
+>     basic21c = infoSerie.bisiestosFin             # 2000,2001,2002,2003    
+>     leap21long = basic21c*int(ceil(simlen/4.0))                 # Through 2100
+353a366
+>     
+358c371
+<     jixar20 = np.zeros(50,dtype=int)
+---
+>     jixar20 = np.zeros(infoSerie.lenSerie,dtype=int)
+369,370c382,383
+<     choose20 = rand(50)                      # Random uniform distribution
+<     choice20 = np.zeros(50,dtype=int)        # Array to fill
+---
+>     choose20 = rand(infoSerie.lenSerie)                      # Random uniform distribution
+>     choice20 = np.zeros(infoSerie.lenSerie,dtype=int)        # Array to fill
+374c387
+<     for j in range(50):                      # Yields an integer, 0 - 4
+---
+>     for j in range(infoSerie.lenSerie):                      # Yields an integer, 0 - 4
+382c395
+<         for i in range(50):                  # Do for 20C
+---
+>         for i in range(infoSerie.lenSerie):                  # Do for 20C
+488c501
+<         prforced[50:] = pr21forced            # Fill in 21c part of forced
+---
+>         prforced[infoSerie.lenSerie:] = pr21forced            # Fill in 21c part of forced
+613c626
+<         sirmse = np.sqrt(((stripratio - injectratio[:50])**2).sum())
+---
+>         sirmse = np.sqrt(((stripratio - injectratio[:infoSerie.lenSerie])**2).sum())
+633,634c646,647
+<             for i in range(50):
+<                 jix = jixar20[i] - 1950
+---
+>             for i in range(infoSerie.lenSerie):
+>                 jix = jixar20[i] - infoSerie.anioInicio
+655c668
+<             jix = jixar21[i] - 1950          # Resampled 21C years
+---
+>             jix = jixar21[i] - infoSerie.anioInicio          # Resampled 21C years
+727c740
+<             acru(datmat,simlen,infile,fname,simix)     # Write out the files
+---
+>             acru(datmat,simlen,infile,fname,simix,infoSerie)     # Write out the files
+771c784
+< def acru(simdat,simlen,infile,fname,simix):
+---
+> def acru(simdat,simlen,infile,fname,simix,infoSerie):
+789c802
+<     for i in range(1950,2000+simlen):
+---
+>     for i in range(infoSerie.anioInicio,infoSerie.anioFin+1+simlen):
+804c817,818
+<                 outstr = fileid+datestr+datastr+'\n'
+---
+>                 #outstr = fileid+datestr+datastr+'\n'
+>                 outstr = datestr+datastr+'\n'
+815c829,830
+<                 outstr = fileid+datestr+datastr+'\n'
+---
+>                 #outstr = fileid+datestr+datastr+'\n'
+>                 outstr = datestr+datastr+'\n'

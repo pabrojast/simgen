@@ -1,0 +1,13 @@
+Archivos:
+
+notasDesarrollo: Notas sobre como correr el script
+
+simgen9s.py: Este archivo se debe ubicar junto con datetrend2.py(directorio principal del script)
+
+readqc.py: Este archivo se debe ubicar junto con simgen9s.py
+
+quantsearch.py: Este archivo se debe ubicar dentro de input_sim junto con el archivo de datos sim_100kyr.dat
+
+simgenExtras.py: Contiene las rutinas de generación de medias y obtencion de información de la serie. Debe estar junto con simgen9s.py y quantsearch.py
+
+*.diff: Son los archivos que registran los cambios entre los archivos originales y los modificados.

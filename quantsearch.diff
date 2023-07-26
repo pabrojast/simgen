@@ -1,0 +1,29 @@
+24a25,28
+> from simgenExtras import promedio
+> 
+> PASO = 10
+> ARCHIVO_ENTRADA = 'sim_100kyr.dat'
+28c32
+<     dat=np.loadtxt("sim_mean.dat")
+---
+>     #dat=np.loadtxt("sim_mean.dat")    
+96a101,119
+> def generar(pctile):
+> 	generadorMedias = promedio(ARCHIVO_ENTRADA,PASO)
+> 	generadorMedias.generarMedias()
+> 	medias = generadorMedias.getMediasNP()
+> 	gen(medias,pctile)
+> 	
+> 	
+> 	
+> def main():
+> 	if(len(sys.argv)>1):
+> 		generar(int(sys.argv[1]))
+> 	else:
+> 		print "uso: %s pctile" % sys.argv[0]
+> 
+> 	return 0
+> 
+> if __name__ == '__main__':
+> 	main()
+> 	

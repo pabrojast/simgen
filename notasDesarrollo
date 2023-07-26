@@ -1,0 +1,38 @@
+Notas sobre el desarrollo:
+
+Para correr la función gen en simgen9s.py es necesario que los archivos con datos históricos de las estaciones en "obs/" tengan la misma longitud, 
+todos sus campos deben contener datos y no se admiten valores de cadena tales como 'NA'.
+
+El formato de estos puede ser el clásico: "idfile+fecha prec tempMax tempMin" donde idfile esta concatenado con la fecha(No hay un caracter que los separe)
+o "fecha prec tempMax tempMin". En ambos casos el separador de campos es uno o más espacios excepto en la parte inicial de la línea que contiene
+la fecha y el id de archivo, estos tienen el formato "ididididaaaammdd" 
+idididid -> id de archivo(8 caracteres)
+aaaa -> año(4 caracteres)   |
+mm   -> mes(2 caracteres)   |===> fecha
+dd   -> día(2 caracteres)   |
+
+Para usar el formato sin id de archivo es necesario setear en True la varialbe FORMATO_SIN_ID en readqc.py y en simgenExtras.py
+
+Los archivos dat/obsavdt.dat y dat/obsav.dat deben contener tantas lineas como años posean las series históricas de las estaciones.
+
+Se puede correr gen en quantsearch.py de la manera convencional,
+
+>>> from quantsearch import gen
+>>> gen(datos,pctile)
+
+correrlo generando las medias decadales en base al archivo sim_100kyr.dat
+
+>>> from quantsearch import generar
+>>> generar(pctile)
+
+o desde la consola:
+
+$ python quantsearch.py pctile
+
+
+Nota sobre la serie a procesar(Estaciones 1019, 1020, 1021, 1023):
+
+Los archivos en 'dat' tienen un registro menos de los necesarios. Son 39 años y contienen 38 registros
+Los archivos en 'obs' no cumplen con la convencion de nombres: deben ser obshis_NUM-ESTACION.txt(no obshist)
+Los archivos en 'obs' no están bien delimitados y contienen valores 'NA'
+Los archivos en 'obs' no tienen la misma longitud, faltan días en algunos de ellos.

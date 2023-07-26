@@ -1,0 +1,26 @@
+23a24,27
+> FORMATO_SIN_ID = False
+> #Desplazamiento desde el comienzo de la linea hasta la fecha
+> DELTA_FECHA = 8
+> 
+26a31,34
+>     delta = DELTA_FECHA
+>     if(FORMATO_SIN_ID):
+> 		delta = 0
+> 			
+39,40c47,48
+<         qdate = q[:16]
+<         qdata = q[16:]
+---
+>         qdate = q[:8+delta]
+>         qdata = q[8+delta:]
+42,45c50,53
+<             
+<         datmat[ct,0] = qdate[8:12]
+<         datmat[ct,1] = qdate[12:14]
+<         datmat[ct,2] = qdate[14:16]
+---
+>         
+>         datmat[ct,0] = qdate[0+delta:4+delta]
+>         datmat[ct,1] = qdate[4+delta:6+delta]
+>         datmat[ct,2] = qdate[6+delta:8+delta]
