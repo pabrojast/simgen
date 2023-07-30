@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+/daily
+/Input_Datos/*
+/Procesamiento/output/*
+/Procesamiento/tmp/*
+*.Rproj

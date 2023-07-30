@@ -1,11 +1,10 @@
-
 #UTF-8
 #Encoding(current_path) <- "UTF-8"
 #directorio de simgen y script
 #opcion b
 #setwd("D:/Dropbox-Temporal/cazalac/simgen-Limari_v3")
 
-#Alternativa después de primera ejecución, requiere libreria rstudioapi
+#Alternativa despu?s de primera ejecuci?n, requiere libreria rstudioapi
 current_path <- rstudioapi::getActiveDocumentContext()$path 
 setwd(dirname(current_path ))
 
@@ -24,7 +23,7 @@ remover_archivos_antiguos(directorio = c("output_sim","obs","acru","Procesamient
 formateo_datos_pais()
 
 #correlacion con modelos, para una nueva cuenca usar clearcache = "YES"
-corrcmip5models(LongMin = 19, LongMax = 16.5, LatMin = -32.77, LatMax = -31.38, umbral = 0.2, clearcache = "NO")
+corrcmip5models(LongMin = 18, LongMax = 32, LatMin = -29, LatMax = -16, umbral = 0.2, clearcache = "NO")
 #corrcmip5models(LongMin = -71.71, LongMax = -70.28, LatMin = -31.42, LatMax = -30.25, umbral = 0.30, clearcache = "NO")
 
 #preparacion de datos

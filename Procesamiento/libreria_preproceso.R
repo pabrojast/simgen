@@ -348,7 +348,7 @@ corrcmip5models <- function(LongMin = -70.7, LongMax = -70.2, LatMin = -28.8,Lat
   #     (Historical and Projected)
   #---------------------------------------------------------------------------------------------------------------------------------
   #---------------------------------------------------------------------------------------------------------------------------------
-  
+  #LongMin = 18; LongMax = 32; LatMin = -29; LatMax = -16; umbral = 0.2; clearcache = "NO";
   
   #A list is created so that values of T and Pp can be stored
   tdppList <- list()
@@ -365,15 +365,21 @@ corrcmip5models <- function(LongMin = -70.7, LongMax = -70.2, LatMin = -28.8,Lat
     ###########funcion cache################### 25-03-2018
     ######################################################
     if(file.exists(paste("Procesamiento/tmp/gridtable",j,".tsv",sep=""))){
-      td_hist <- read.delim(paste("Procesamiento/tmp/gridtable",j,".tsv",sep=""),stringsAsFactors = FALSE)
+      td_hist <- read.table(paste("Procesamiento/tmp/gridtable",j,".tsv",sep=""),stringsAsFactors = FALSE, skip = 2)
     }else{
       download.file(paste("http://www.climatedatalibrary.cl/SOURCES/.WCRP/.CMIP5/.Historical/.MONTHLY/.",
                           fecha_modelos[j,1],"/.tas/%5BX+Y+%5Daverage/T/first/%28Dec%202005%29RANGE/gridtable.tsv", sep = ""), destfile = paste("Procesamiento/tmp/gridtable",j,".tsv",sep=""))
-      td_hist <- read.delim(paste("Procesamiento/tmp/gridtable",j,".tsv",sep=""),stringsAsFactors = FALSE)
+      td_hist <- read.table(paste("Procesamiento/tmp/gridtable",j,".tsv",sep=""),stringsAsFactors = FALSE, skip = 2)
     }
     ########fin de modificacion ##############25-03-2018
+    ## 29-07-2023
+    #para poder leer el archivo elimine las primeras dos lineas
+    #ahora las agregare como dummy ya que se borran despues
+    #td_hist <- rbind(td_hist[1:2,], td_hist)
     
-    td_hist <- td_hist[2:nrow(td_hist),]
+    #td_hist <- td_hist[2:nrow(td_hist),]
+    #rownames(td_hist) <- 1:nrow(td_hist)
+    
     td_hist[,2] <- as.numeric(td_hist[,2])
     td_hist <- ts(td_hist[,2], start = c(as.numeric(fecha_modelos[j,3]),as.numeric(match(fecha_modelos[j,2], month.abb))), frequency = 12)    
     
@@ -388,15 +394,20 @@ corrcmip5models <- function(LongMin = -70.7, LongMax = -70.2, LatMin = -28.8,Lat
     #--------------
     #inicio de modificacion de cache 25-03-2018
     if(file.exists(paste("Procesamiento/tmp/gridtable_proj",j,".tsv",sep=""))){
-      td_proj <- read.delim(paste("Procesamiento/tmp/gridtable_proj",j,".tsv",sep=""),stringsAsFactors = FALSE)
+      td_proj <- read.table(paste("Procesamiento/tmp/gridtable_proj",j,".tsv",sep=""),stringsAsFactors = FALSE,skip=2)
     }else{
       download.file(paste("http://www.climatedatalibrary.cl/SOURCES/.WCRP/.CMIP5/.rcp85/.MONTHLY/.",
                           fecha_modelos[j,1],"/.tas/%5BX+Y+%5Daverage/gridtable.tsv", sep = ""), destfile = paste("Procesamiento/tmp/gridtable_proj",j,".tsv",sep=""))
-      td_proj <- read.delim(paste("Procesamiento/tmp/gridtable_proj",j,".tsv",sep=""),stringsAsFactors = FALSE)
+      td_proj <- read.table(paste("Procesamiento/tmp/gridtable_proj",j,".tsv",sep=""),stringsAsFactors = FALSE, skip=2)
     }
     ###modificacion de cache
+    #ahora las agregare como dummy ya que se borran despues
+    #td_proj <- rbind(td_proj[1:2,], td_proj)
+    ##
     
-    td_proj <- td_proj[2:nrow(td_proj),]
+    #td_proj <- td_proj[2:nrow(td_proj),]
+    #rownames(td_proj) <- 1:nrow(td_proj)
+    
     td_proj[,2] <- as.numeric(td_proj[,2])
     td_proj <- ts(td_proj[,2], start = c(as.numeric(fecha_modelos[j,7]),as.numeric(match(fecha_modelos[j,6], month.abb))), frequency = 12)    
     
@@ -484,6 +495,7 @@ corrcmip5models <- function(LongMin = -70.7, LongMax = -70.2, LatMin = -28.8,Lat
     #-------------------------------------------------------
     #-------------------------------------------------------
     tdpp <- cbind(td_merge,pp_merge[,3])
+
     colnames(tdpp)[4] <- "Pp_mm/month"
     
     tdppList[[j]] <- tdpp
