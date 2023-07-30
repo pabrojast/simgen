@@ -47,7 +47,7 @@ for (percentil.value in percentile) {
   #simixlen: Es el m?ximo de simix a utilizar por percentil, si simix < simixlen entonces se usa simix.
   #quantiles corresponde a los quantiles a generar
   simgen(workingdir, simixlen=100, quantiles = c(percentil.value/100), 
-         obsix = estaciones, simix, write=1, fname='sim_100kyr.dat', simlen=80, locate=2014, 
+         obsix = estaciones, simix, write=1, fname='sim_100kyr.dat', simlen=70, locate=2014, 
          xval=0, M=1, trendmean=-0.03354315, trendsd=0.03462163, 
          temptrendmean=0.04753433, temptrendsd=0.01393825, pydir=pythondir)
 }
