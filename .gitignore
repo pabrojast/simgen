@@ -7,3 +7,7 @@
 /Procesamiento/output/*
 /Procesamiento/tmp/*
 *.Rproj
+acru/*
+obs/*
+log/*
+output_sim/*

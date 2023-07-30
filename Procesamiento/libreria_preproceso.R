@@ -726,16 +726,16 @@ corrcmip5models <- function(LongMin = -70.7, LongMax = -70.2, LatMin = -28.8,Lat
     #------------------------------
     #inicio de modificacion de cache 25-03-2018
     if(file.exists(paste("Procesamiento/tmp/cmip5dataDL_",cmip5_total[modelo],".tsv",sep=""))){
-      td <- read.delim(paste("Procesamiento/tmp/cmip5dataDL_",cmip5_total[modelo],".tsv",sep=""),stringsAsFactors = FALSE)
+      td <- read.table(paste("Procesamiento/tmp/cmip5dataDL_",cmip5_total[modelo],".tsv",sep=""),stringsAsFactors = FALSE, skip=2)
     }else{
       download.file(paste("http://www.climatedatalibrary.cl/expert/SOURCES/.WCRP/.CMIP5/.rcp85/.MONTHLY/.",
                           cmip5_total[modelo],"/.tas/%5BX+Y+%5Daverage/gridtable.tsv", sep = ""), destfile = paste("Procesamiento/tmp/cmip5dataDL_",cmip5_total[modelo],".tsv",sep=""))
-      td <- read.delim(paste("Procesamiento/tmp/cmip5dataDL_",cmip5_total[modelo],".tsv",sep=""),stringsAsFactors = FALSE)
+      td <- read.table(paste("Procesamiento/tmp/cmip5dataDL_",cmip5_total[modelo],".tsv",sep=""),stringsAsFactors = FALSE, skip=2)
     }
     ###modificacion de cache
     
     
-    td <- td[2:nrow(td),]
+    #td <- td[2:nrow(td),]
     td[,2] <- as.numeric(td[,2])
     td <- ts(td[,2], start = c(2006,1), frequency = 12)
     td <- window(td, start = c(2006,1), end = c(2099,12), frequency = 12)
@@ -759,18 +759,18 @@ corrcmip5models <- function(LongMin = -70.7, LongMax = -70.2, LatMin = -28.8,Lat
     #--------------------------
     #inicio de modificacion de cache 25-03-2018
     if(file.exists(paste("Procesamiento/tmp/cmip5dataDLpp_",cmip5_total[modelo],".tsv",sep=""))){
-      pp <- read.delim(paste("Procesamiento/tmp/cmip5dataDLpp_",cmip5_total[modelo],".tsv",sep=""), header = FALSE)
+      pp <- read.table(paste("Procesamiento/tmp/cmip5dataDLpp_",cmip5_total[modelo],".tsv",sep=""), header = FALSE, skip=2)
     }else{
       download.file(paste("http://www.climatedatalibrary.cl/expert/SOURCES/.WCRP/.CMIP5/.rcp85/.MONTHLY/.",cmip5_total[modelo],"/.pr/X/%28",
                           LongMin,"%29%28",
                           LongMax,"%29RANGEEDGES/Y/%28",
                           LatMin,"%29%28",
                           LatMax,"%29RANGEEDGES%5BX/Y%5Daverage/gridtable.tsv",sep = ""), destfile = paste("Procesamiento/tmp/cmip5dataDLpp_",cmip5_total[modelo],".tsv",sep=""))
-      pp <- read.delim(paste("Procesamiento/tmp/cmip5dataDLpp_",cmip5_total[modelo],".tsv",sep=""), header = FALSE)
+      pp <- read.table(paste("Procesamiento/tmp/cmip5dataDLpp_",cmip5_total[modelo],".tsv",sep=""), header = FALSE, skip=2)
     }
     ###modificacion de cache
   
-    pp <- as.numeric(as.character(pp[3:nrow(pp),2]))
+    pp <- as.numeric(as.character(pp[1:nrow(pp),2]))
     
     #pp <- t(pp)#*30 #30 dias.                
     pp <- ts(pp, start = c(2006,1), frequency = 12)

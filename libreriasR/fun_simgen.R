@@ -104,7 +104,7 @@ numestacion <- numestacion+1
     pdf(paste("output_sim/graficos/P",percentil.value,"_",gsub('X','', colnames(pp_est)[numestacion]),".pdf",sep=""),  width=8, height=9)
     par(mfrow=c(3,1))
     plot(pp_est[,numestacion], x=as.Date(pp_est[,1]) , type="l", ylab = "Precipitation [mm]", xlab = "Year")
-    #title(paste("Proyección Precipitación Para Estación",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
+    #title(paste("Proyecci?n Precipitaci?n Para Estaci?n",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
     
     for (pp.value in pp){
       pp_est <- read.csv(pp.value)
@@ -114,8 +114,8 @@ numestacion <- numestacion+1
     }
     
     tmin_est <- read.csv(tmin[1])
-    plot(tmin_est[,numestacion], type="l", x=as.Date(pp_est[,1]),  ylab = "Tmin [°C]", xlab = "Year")
-    #title(paste("Proyección Tmin Para Estación",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
+    plot(tmin_est[,numestacion], type="l", x=as.Date(pp_est[,1]),  ylab = "Tmin [C]", xlab = "Year")
+    #title(paste("Proyecci?n Tmin Para Estaci?n",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
     
     for (tmin.value in tmin){
       tmin_est <- read.csv(tmin.value)
@@ -124,8 +124,8 @@ numestacion <- numestacion+1
     }
     
     tmax_est <- read.csv(tmax[1])
-    plot(tmax_est[,numestacion], type="l", x=as.Date(pp_est[,1]), ylab ="Tmax [°C]" , xlab = "Year" )
-    #title(paste("Proyección Tmáx Para Estación",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
+    plot(tmax_est[,numestacion], type="l", x=as.Date(pp_est[,1]), ylab ="Tmax [?C]" , xlab = "Year" )
+    #title(paste("Proyecci?n Tm?x Para Estaci?n",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
     
     for (tmax.value in tmax){
       tmax_est <- read.csv(tmax.value)
@@ -147,7 +147,7 @@ GraficarAnual2 <- function(numestacion = 1, percentiles = c(10,50,95)) {
     pdf(paste("output_sim/graficos/P",percentil.value,"_",gsub('X','', colnames(pp_est)[numestacion]),".pdf",sep=""))
     par(mfrow=c(3,1))
     plot(pp_est[,numestacion], x=as.Date(pp_est[,1]) , type="l", ylab = "Precipitation", xlab = "Year")
-    #title(paste("Proyección Precipitación Para Estación",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
+    #title(paste("Proyecci?n Precipitaci?n Para Estaci?n",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
     
     for (pp.value in pp){
       pp_est <- read.csv(pp.value)
@@ -158,7 +158,7 @@ GraficarAnual2 <- function(numestacion = 1, percentiles = c(10,50,95)) {
     
     tmin_est <- read.csv(tmin[1])
     plot(tmin_est[,numestacion], type="l", x=as.Date(pp_est[,1]),  ylab = "Tmin", xlab = "Year")
-    #title(paste("Proyección Tmin Para Estación",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
+    #title(paste("Proyecci?n Tmin Para Estaci?n",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
     
     for (tmin.value in tmin){
       tmin_est <- read.csv(tmin.value)
@@ -168,7 +168,7 @@ GraficarAnual2 <- function(numestacion = 1, percentiles = c(10,50,95)) {
     
     tmax_est <- read.csv(tmax[1])
     plot(tmax_est[,numestacion], type="l", x=as.Date(pp_est[,1]), ylab ="Tmax" , xlab = "Year" )
-    #title(paste("Proyección Tmáx Para Estación",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
+    #title(paste("Proyecci?n Tm?x Para Estaci?n",gsub('X','', colnames(pp_est)[numestacion]),"P",percentil.value))
     
     for (tmax.value in tmax){
       tmax_est <- read.csv(tmax.value)
